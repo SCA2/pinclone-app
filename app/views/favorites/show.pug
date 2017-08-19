@@ -1,0 +1,21 @@
+extends ../layout/layout.pug
+
+block content
+  .container
+    .d-flex.justify-content-center
+      p
+        img(src=favorite.link)
+    .d-flex.justify-content-center
+      p
+        dl.row
+          dt.col-sm-2 Title
+          dd.col-sm-10=favorite.title
+          dt.col-sm-2 Link
+          dd.col-sm-10=favorite.link
+    .d-flex.justify-content-center
+      if user && isOwnedBy
+        form(action='/favorites/' + favorite._id + '/edit' method='get')
+          button.btn.btn-primary.mr-1(type="submit") Edit
+      if user && isOwnedBy
+        form(action='/favorites/' + favorite._id + '?_method=DELETE' method='post')
+          button.btn.btn-danger.ml-1(type="submit") Delete

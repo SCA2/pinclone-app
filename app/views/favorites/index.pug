@@ -1,0 +1,14 @@
+extends ../layout/layout.pug
+
+block content
+  section
+    .container
+      .card-columns
+        if favorites
+          each favorite in favorites
+            .card(style="min-height: 350px")
+              a(href='/favorites/' + favorite._id)
+                img.card-img-top.img-fluid(src=favorite.link)
+              .card-block
+                h4.card-title=favorite.title
+                p.card-text="Likes " + favorite.likes.length
