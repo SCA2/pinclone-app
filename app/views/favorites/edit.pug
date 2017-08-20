@@ -4,9 +4,9 @@ block content
   .container-fluid
     .row
       .col-sm-8.offset-sm-2
-        form(action="/favorites" method="post")
+        form(action="/favorites/" + favorite._id method="post")
           div.text-center
-            h3 Add this link to your wall?
+            h3 Edit this link?
           div.row.form-group
             label.col-form-label.col-sm-2(for="title") Title
             input.form-control.col-sm-10(type="text" name="title" value=favorite.title)
@@ -20,4 +20,4 @@ block content
             label.col-form-label.col-sm-2(for="link") Avatar URL
             input.form-control.col-sm-10(type="text" name="avatarURL" value=user.twitter.avatarURL readonly)
           div.text-center
-            button.btn.btn-primary(type="submit") Create Link
+            button.btn.btn-primary(type="submit") Update Link

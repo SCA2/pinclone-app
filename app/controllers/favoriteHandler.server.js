@@ -17,41 +17,29 @@ function FavoriteHandler () {
     res.render('../views/favorites/new.pug', { favorite: favorite });
   };
 
+  this.createFavorite = (req, res) => {
+    Favorite.createFavorite(req, (err, favorite) => {
+      res.render('../views/favorites/show.pug', { favorite: favorite });
+    });
+  };
+
   this.showFavorite = function (req, res) {
     Favorite.findById(req.params.favorite_id, (err, favorite) => {
-      let isOwnedBy = req.isAuthenticated() && req.user && (req.user.favorites.indexOf(favorite._id) != -1);
+      let isOwnedBy = req.isAuthenticated() && req.user && req.user._id.equals(favorite.author);
       res.render('../views/favorites/show.pug', { favorite: favorite, user: req.user, isOwnedBy: isOwnedBy });
     });
   };
 
   this.editFavorite = function (req, res) {
     Favorite.findById(req.params.favorite_id, (err, favorite) => {
-      res.render('../views/favorites/new.pug', { favorite: favorite });
+      res.render('../views/favorites/edit.pug', { favorite: favorite });
     });
   };
 
-  this.createFavorite = (req, res) => {
-    Favorite
-      .findOneAndUpdate(
-        { 'title': req.body.title },
-        { $set: req.body },
-        { new: true, upsert: true }
-      ).exec((err, doc) => {
-        req.user.favorites.addToSet(doc._id);
-        req.user.save().then( res.redirect('/favorites') );
-      });
-  };
-
   this.updateFavorite = (req, res) => {
-    Favorite
-      .findOneAndUpdate(
-        { '_id': req.body.favorite_id },
-        { $set: req.body },
-        { new: true, upsert: false }
-      ).exec((err, doc) => {
-        req.user.favorites.addToSet(doc._id);
-        req.user.save().then( res.redirect('/favorites') );
-      });
+    Favorite.updateFavorite(req, (err, favorite) => {
+      res.render('../views/favorites/show.pug', { favorite: favorite });
+    });
   };
 
   this.deleteFavorite = function (req, res) {
@@ -102,7 +90,7 @@ function FavoriteHandler () {
 
   this.getUserFavorites = function (req, res) {
     Favorite
-      .find({ '_id' : { $in : req.user.favorites }})
+      .find({ 'author' : req.user._id })
       .exec(function (err, favorites) {
         if (err) { throw err; }
         res.render('../views/favorites/index.pug', { favorites: favorites });

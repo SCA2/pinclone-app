@@ -11,4 +11,6 @@ block content
                 img.card-img-top.img-fluid(src=favorite.link)
               .card-block
                 h4.card-title=favorite.title
+                a(href='/users/' + favorite.author + '/favorites')
+                  img.card-img-top.img-fluid(src=favorite.avatarURL)
                 p.card-text="Likes " + favorite.likes.length

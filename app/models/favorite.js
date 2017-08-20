@@ -4,9 +4,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Favorite = new Schema({
-  title : String,
-  link  : String,
-  likes : [{type: Schema.Types.ObjectId, ref: 'User'}]
+  title     : String,
+  link      : String,
+  avatarURL : String,
+  author    : {type: Schema.Types.ObjectId, ref: 'User'},
+  likes     : [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
 Favorite.methods.getLikesCount = function(user, cb) {
@@ -52,16 +54,31 @@ Favorite.statics.getFavorites = function(cb) {
 }
 
 Favorite.statics.createFavorite = function(req, cb) {
-  console.log(req);
+  this
+    .create(
+      {
+        title: req.body.title,
+        link: req.body.link,
+        author: req.body.author,
+        avatarURL: req.body.avatarURL,
+        likes: []
+      },
+      (err, favorite) => {
+        cb(err, favorite);
+      }
+    );
+}
+
+Favorite.statics.updateFavorite = function(req, cb) {
   this
     .findOneAndUpdate(
-      { 'id': req.body.id },
+      { '_id': req.params.favorite_id },
       { $set: req.body },
-      { new: true, upsert: true }
-    ).exec((err, doc) => {
-      req.user.favorites.addToSet(doc._id);
-      req.user.save().then(cb(doc));
+      { new: true, upsert: false }
+    ).exec((err, favorite) => {
+      cb(err, favorite);
     });
+
 }
 
 module.exports = mongoose.model('Favorite', Favorite);

@@ -12,6 +12,8 @@ block content
           dd.col-sm-10=favorite.title
           dt.col-sm-2 Link
           dd.col-sm-10=favorite.link
+          dt.col-sm-2 Author
+          dd.col-sm-10=favorite.author
     .d-flex.justify-content-center
       if user && isOwnedBy
         form(action='/favorites/' + favorite._id + '/edit' method='get')
