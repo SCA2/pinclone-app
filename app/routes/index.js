@@ -63,6 +63,6 @@ module.exports = function (app, passport) {
     .get(isLoggedIn, favoriteHandler.getUser)
 
   app.route('/users/:user_id/favorites')
-    .get(isLoggedIn, favoriteHandler.getUserFavorites);
+    .get(favoriteHandler.getUserFavorites);
 
 };

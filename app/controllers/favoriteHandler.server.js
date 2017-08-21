@@ -80,7 +80,7 @@ function FavoriteHandler () {
 
   this.getUserFavorites = function (req, res) {
     Favorite
-      .find({ 'author' : req.user._id })
+      .find({ 'author' : req.params.user_id })
       .exec(function (err, favorites) {
         if (err) { throw err; }
         res.render('../views/favorites/index.pug', { favorites: favorites });
