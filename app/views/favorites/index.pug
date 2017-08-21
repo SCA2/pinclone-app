@@ -14,5 +14,6 @@ block content
                 a(href='/users/' + favorite.author + '/favorites')
                   img.card-img-top.img-fluid(src=favorite.avatarURL)
                 p.card-text.likes-total="Likes " + favorite.likes.length
-    script(type="text/javascript" src="/common/ajax-functions.js")
-    script(type="text/javascript" src="/controllers/favoriteHandler.client.js")
+
+  script(type="text/javascript" src="/common/ajax-functions.js")
+  script(type="text/javascript" src="/controllers/favoriteHandler.client.js")
