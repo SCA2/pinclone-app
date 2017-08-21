@@ -10,12 +10,12 @@
   }
 
   ajaxFunctions.ready(() => {
-    let image = favorite.querySelector('img.card-img-top');
-    image.addEventListener('error', function() {
-      image.src = 'https://lorempixel.com/295/325/abstract/'
-    }, false);
-
     favorites.forEach(favorite => {
+      let image = favorite.querySelector('img.card-img-top');
+      image.addEventListener('error', function() {
+        image.src = 'https://lorempixel.com/295/325/abstract/'
+      }, false);
+
       favorite.updateLikesCount = function(likes) {
         likes = JSON.parse(likes);
         favorite.querySelector('p.likes-total').innerHTML = "Likes " + likes;
