@@ -28,7 +28,7 @@
 
     let image = favorite.querySelector('img.card-img-top');
     image.addEventListener('error', function() {
-      image.src = 'http://lorempixel.com/295/325/abstract/'
+      image.src = 'https://lorempixel.com/295/325/abstract/'
     }, false);
   });
 
