@@ -6,14 +6,15 @@ block content
       .card-columns
         if favorites
           each favorite in favorites
-            .favorite.card(id=favorite._id style="min-height: 350px")
+            .favorite.card(id=favorite._id)
               a(href='/favorites/' + favorite._id)
                 img.card-img-top.img-fluid(src=favorite.link)
               .card-block
                 h4.card-title=favorite.title
-                a(href='/users/' + favorite.author + '/favorites')
-                  img.card-img-top.img-fluid(src=favorite.avatarURL)
-                p.card-text.likes-total="Likes " + favorite.likes.length
+                .d-inline-flex.justify-content-between.align-items-center(style="width: 100%")
+                  a(href='/users/' + favorite.author + '/favorites')
+                    img.img-fluid(src=favorite.avatarURL)
+                  p.card-text.likes-total="Likes " + favorite.likes.length
 
   script(type="text/javascript" src="/common/ajax-functions.js")
   script(type="text/javascript" src="/controllers/favoriteHandler.client.js")
