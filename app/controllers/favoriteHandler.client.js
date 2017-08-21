@@ -10,6 +10,11 @@
   }
 
   ajaxFunctions.ready(() => {
+    let image = favorite.querySelector('img.card-img-top');
+    image.addEventListener('error', function() {
+      image.src = 'https://lorempixel.com/295/325/abstract/'
+    }, false);
+
     favorites.forEach(favorite => {
       favorite.updateLikesCount = function(likes) {
         likes = JSON.parse(likes);
@@ -24,11 +29,6 @@
       ajaxFunctions.ajaxRequest('POST', favoriteUrl(favorite), function() {
         ajaxFunctions.ajaxRequest('GET', favoriteUrl(favorite), favorite.updateLikesCount);
       });
-    }, false);
-
-    let image = favorite.querySelector('img.card-img-top');
-    image.addEventListener('error', function() {
-      image.src = 'https://lorempixel.com/295/325/abstract/'
     }, false);
   });
 
