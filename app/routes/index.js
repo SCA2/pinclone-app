@@ -57,8 +57,7 @@ module.exports = function (app, passport) {
 
   app.route('/favorites/:favorite_id/likes')
     .get(isLoggedIn, favoriteHandler.getFavoriteLikesCount)
-    .post(isLoggedIn, favoriteHandler.updateFavorite)
-    .delete(isLoggedIn, favoriteHandler.deleteFavorite);
+    .post(isLoggedIn, favoriteHandler.toggleFavoriteLike);
 
   app.route('/users/:user_id')
     .get(isLoggedIn, favoriteHandler.getUser)

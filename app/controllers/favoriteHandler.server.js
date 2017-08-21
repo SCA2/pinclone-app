@@ -59,26 +59,16 @@ function FavoriteHandler () {
       .findOne({ '_id': req.params.favorite_id })
       .exec((err, favorite) => {
         favorite.getLikesCount(count => {
-          res.send(count);
+          res.json(count);
         });
       });
   };
 
-  this.createFavoriteLike = (req, res) => {
+  this.toggleFavoriteLike = (req, res) => {
     Favorite
-      .findOne({ '_id': req.params.favorite_id, request: req.user._id })
+      .findOne({ '_id': req.params.favorite_id })
       .exec((err, favorite) => {
-        favorite.createLike(req.user._id, count => {
-          res.send(count);
-        });
-      });
-  };
-
-  this.deleteFavoriteLike = (req, res) => {
-    Favorite
-      .findOne({ '_id': req.params.favorite_id, request: req.user._id })
-      .exec((err, favorite) => {
-        favorite.deleteLike(req.user._id, count => {
+        favorite.toggleLike(req.user, count => {
           res.send(count);
         });
       });

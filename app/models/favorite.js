@@ -11,7 +11,7 @@ var Favorite = new Schema({
   likes     : [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
-Favorite.methods.getLikesCount = function(user, cb) {
+Favorite.methods.getLikesCount = function(cb) {
   this.model('Favorite').findOne(
     { _id: this._id },
     function(error, favorite) {
@@ -19,6 +19,17 @@ Favorite.methods.getLikesCount = function(user, cb) {
       cb(favorite.likes.length);
     }
   );
+}
+
+Favorite.methods.toggleLike = function(user, cb) {
+  this.model('Favorite').findOne({ _id: this._id }, (error, favorite) => {
+    if(error) { console.log('Mongo error: ' + error.message) }
+    if(favorite.likes.indexOf(user._id) == -1) {
+      this.createLike(user, cb)
+    } else {
+      this.deleteLike(user, cb)
+    }
+  });
 }
 
 Favorite.methods.createLike = function(user, cb) {
