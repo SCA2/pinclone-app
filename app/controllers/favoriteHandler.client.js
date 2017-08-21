@@ -12,7 +12,8 @@
   ajaxFunctions.ready(() => {
     favorites.forEach(favorite => {
       let image = favorite.querySelector('img.card-img-top');
-      image.addEventListener('error', function() {
+      image.addEventListener('error', function(e) {
+        console.log(e);
         image.src = 'https://lorempixel.com/295/325/abstract/'
       }, true);
 
